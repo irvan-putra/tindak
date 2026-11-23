@@ -175,30 +175,14 @@ def tindak_adaptive(version):
 
 
 def write_all(version, res_dir):
-    write_densities(tindak(version), res_dir)
-    write_densities(tindak(version), res_dir, "ic_launcher_round.png")
-    fg, mono = tindak_adaptive(version)
-    drawables = os.path.join(res_dir, "drawable-xxxhdpi")
-    os.makedirs(drawables, exist_ok=True)
-    fg.resize((432, 432), Image.LANCZOS).save(
-        os.path.join(drawables, "ic_launcher_foreground.png"), optimize=True)
-    mono.resize((432, 432), Image.LANCZOS).save(
-        os.path.join(drawables, "ic_launcher_monochrome.png"), optimize=True)
-    anydpi = os.path.join(res_dir, "mipmap-anydpi-v26")
-    os.makedirs(anydpi, exist_ok=True)
-    for name in ("ic_launcher.xml", "ic_launcher_round.xml"):
-        with open(os.path.join(anydpi, name), "w") as fh:
-            fh.write(ADAPTIVE_XML)
-    values = os.path.join(res_dir, "values")
-    os.makedirs(values, exist_ok=True)
-    colors_path = os.path.join(values, 'colors.xml')
-    text = open(colors_path).read() if os.path.exists(colors_path) else '<resources>\n</resources>\n'
-    entry = '<color name="ic_launcher_background">#101828</color>'
-    if 'name="ic_launcher_background"' in text:
-        text = re.sub(r'<color name="ic_launcher_background">[^<]+</color>', entry, text)
-    else:
-        text = text.replace('</resources>', '    '+entry+'\n</resources>')
-    with open(colors_path, 'w') as fh: fh.write(text)
+    """Single launcher icon (family rule, Irvan 2026-11-23): one 192px full-color PNG at
+    res/drawable/ic_launcher.png. No density ladder, no adaptive XML, no monochrome layer."""
+    out = os.path.join(res_dir, "drawable")
+    os.makedirs(out, exist_ok=True)
+    tindak(version).resize((192, 192), Image.LANCZOS).save(os.path.join(out, "ic_launcher.png"), optimize=True)
+    for stale in ("mipmap-mdpi", "mipmap-hdpi", "mipmap-xhdpi", "mipmap-xxhdpi", "mipmap-xxxhdpi",
+                  "mipmap-anydpi-v26", "drawable-xxxhdpi"):
+        shutil.rmtree(os.path.join(res_dir, stale), ignore_errors=True)
 
 
 def main():

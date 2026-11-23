@@ -94,7 +94,7 @@ jobs:
           git config user.name "irvan-putra"
           git config user.email "irvan.putra@gmail.com"
           python3 tools/version_icons.py
-          git add app/build.gradle app/src/main/res/mipmap-* app/src/main/res/drawable-xxxhdpi app/src/main/res/values/colors.xml
+          git add -A app/build.gradle app/src/main/res
           git commit -m "release: stamp v$IN_NAME ($IN_CODE)"
           git push origin HEAD:main
           echo "STAMP_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
