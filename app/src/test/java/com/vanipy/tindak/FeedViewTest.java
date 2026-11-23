@@ -6,7 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 32)
 public class FeedViewTest {
     private static final String JSON = "{\"generated_at\":\"x\",\"sections\":["
             + "{\"id\":\"a\",\"title\":\"Today\",\"items\":["
