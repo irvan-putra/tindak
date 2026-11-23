@@ -6,6 +6,7 @@ tests, code review or local harnesses. See README.md "What is verified".
 
 ## tindak (Android app + home-screen widget)
 
+- **v0.5.23** - Active view and grouping. The app and widget no longer show finished rows (completed, done, canceled, archived, deleted); rows repeated by id show once. The home screen groups items under the feed's section titles with counts. New menu entry "Show history (finished items)" lists only finished rows, and "Back to active items" returns. The widget stays a flat, active-only list. Covered by FeedViewTest; not phone-verified.
 - **v0.5.12 (source preparation, not yet released)** - Use `com.vanipy.tindak` consistently for the current Android application ID, namespace and source/test packages. Fresh-start install beside the old app, no migration or reset. Keep existing app names, versioned downloads and same-package/signer update checks. Update active CI selectors/source generators and the icon version. Refresh persisted background sync to the renamed worker without resetting its schedule. Existing home-screen widgets from the earlier new-ID candidate may need re-adding because their provider class changed. Previous source remains in Git history.
 
 - **v0.5.7** - Fix widget host inflation and list copying.

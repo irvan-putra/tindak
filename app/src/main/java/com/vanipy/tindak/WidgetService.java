@@ -39,10 +39,8 @@ public class WidgetService extends RemoteViewsService {
             if (json == null) { rows = next; return; }
             try {
                 FeedParser.Feed feed = FeedParser.parse(json);
-                // pure list (user-chosen): no section headings anywhere, items only
-                for (FeedParser.Section sec : feed.sections) {
-                    next.addAll(sec.items);
-                }
+                // widget stays a flat list, active items only (finished rows are history)
+                next.addAll(FeedView.items(feed, false));
             } catch (Exception ignored) { }
             rows = next;
         }

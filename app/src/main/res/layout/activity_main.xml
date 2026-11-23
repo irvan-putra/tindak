@@ -87,6 +87,9 @@
         <TextView android:id="@+id/openCanvas" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:focusable="true" android:minHeight="48dp" android:gravity="center_vertical" android:text="Open the review canvas (prototype)"
             android:textColor="#98A2B3" android:textSize="14sp" />
+        <TextView android:id="@+id/historyToggle" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:focusable="true" android:minHeight="48dp" android:gravity="center_vertical" android:text="Show history (finished items)"
+            android:textColor="#98A2B3" android:textSize="14sp" />
         <TextView android:id="@+id/openBot" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:focusable="true" android:minHeight="48dp" android:gravity="center_vertical" android:text="Open the DeltaChat bot"
             android:textColor="#98A2B3" android:textSize="14sp" />

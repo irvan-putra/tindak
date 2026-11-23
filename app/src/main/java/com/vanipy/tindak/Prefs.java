@@ -16,6 +16,8 @@ public class Prefs {
     public static boolean isDemo(Context c) {
         return c instanceof FeedScope ? ((FeedScope)c).demo : get(c).getBoolean("demo_mode", false);
     }
+    public static boolean showHistory(Context c) { return get(c).getBoolean("show_history", false); }
+    public static void setShowHistory(Context c, boolean on) { get(c).edit().putBoolean("show_history", on).apply(); }
     public static long modeEpoch(Context c) { return get(c).getLong("mode_epoch", 0); }
     public static boolean isCurrentFeed(Context c) {
         return !(c instanceof FeedScope) || (((FeedScope)c).epoch == modeEpoch(c)

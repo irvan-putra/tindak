@@ -85,6 +85,11 @@ public class MainActivity extends Activity {
         Button generate = findViewById(R.id.generateKey);
         findViewById(R.id.openCanvas).setOnClickListener(v ->
                 startActivity(new android.content.Intent(this, com.vanipy.tindak.canvas.ReviewCanvasActivity.class)));
+        findViewById(R.id.historyToggle).setOnClickListener(v -> {
+            Prefs.setShowHistory(this, !Prefs.showHistory(this));
+            drawer.closeDrawers();
+            reload();
+        });
         findViewById(R.id.openBot).setOnClickListener(v ->
                 startActivity(new android.content.Intent(this, com.vanipy.tindak.bot.BotActivity.class)));
         Button copy = findViewById(R.id.copyKey);
@@ -388,18 +393,21 @@ public class MainActivity extends Activity {
 
     private void reload() {
         String json = Prefs.feed(this);
+        boolean history = Prefs.showHistory(this);
         List<Object> rows = new ArrayList<>();
         if (json != null) {
             try {
                 FeedParser.Feed feed = FeedParser.parse(json);
-                // pure list (user-chosen): no section headings anywhere, items only
-                for (FeedParser.Section sec : feed.sections) {
-                    rows.addAll(sec.items);
-                }
+                // active view hides finished rows; history view shows only those.
+                // Feed section titles become group headers.
+                rows.addAll(FeedView.rows(feed, history, true));
             } catch (Exception ignored) { }
         }
         adapter.setRows(rows);
+        empty.setText(history ? "No finished items" : "Nothing to do");
         empty.setVisibility(rows.isEmpty() ? View.VISIBLE : View.GONE);
+        TextView toggle = findViewById(R.id.historyToggle);
+        if (toggle != null) toggle.setText(history ? "Back to active items" : "Show history (finished items)");
     }
 
     private void refreshStatus() {
@@ -420,10 +428,26 @@ public class MainActivity extends Activity {
         @Override public Object getItem(int i) { return rows.get(i); }
         @Override public long getItemId(int i) { return i; }
         @Override public boolean isEnabled(int i) { return false; }
+        @Override public int getViewTypeCount() { return 2; }
+        @Override public int getItemViewType(int i) { return rows.get(i) instanceof FeedView.Header ? 1 : 0; }
         @Override public View getView(int i, View convert, ViewGroup parent) {
+            if (rows.get(i) instanceof FeedView.Header) {
+                FeedView.Header h = (FeedView.Header) rows.get(i);
+                TextView t = convert instanceof TextView ? (TextView) convert : new TextView(parent.getContext());
+                float d = parent.getResources().getDisplayMetrics().density;
+                t.setPadding(0, (int) (18 * d), 0, (int) (4 * d));
+                t.setTextSize(12);
+                t.setAllCaps(true);
+                t.setLetterSpacing(0.08f);
+                t.setTypeface(null, android.graphics.Typeface.BOLD);
+                t.setTextColor(0xFF98A2B3);
+                t.setText(h.title + "  \u00b7  " + h.count);
+                return t;
+            }
             View v = convert != null ? convert : inflater.inflate(R.layout.list_item, parent, false);
             FeedParser.Item item = (FeedParser.Item) rows.get(i);
-            String suffix = "in_progress".equals(item.status) ? "  (in progress)" : "";
+            String suffix = "in_progress".equals(item.status) ? "  (in progress)"
+                    : FeedView.isFinished(item.status) ? "  (" + item.status + ")" : "";
             ReminderLinks.apply((TextView) v.findViewById(R.id.item_title), item.title + suffix);
             TextView note = v.findViewById(R.id.item_note);
             if (item.note != null && !item.note.isEmpty()) { ReminderLinks.apply(note, item.note); note.setVisibility(View.VISIBLE); }

@@ -18,7 +18,7 @@ public class BuiltInDemoRenderTest {
   MainActivity a=Robolectric.buildActivity(MainActivity.class).setup().get();
   a.findViewById(R.id.demoMode).performClick();
   assertTrue(Prefs.isDemo(c));assertFalse(Prefs.isPaired(c));
-  assertEquals(6,((ListView)a.findViewById(R.id.list)).getAdapter().getCount());
+  assertEquals(8,((ListView)a.findViewById(R.id.list)).getAdapter().getCount());
   ((androidx.drawerlayout.widget.DrawerLayout)a.findViewById(R.id.drawerLayout)).closeDrawer(androidx.core.view.GravityCompat.START,false);
   render(a.getWindow().getDecorView(),"/tmp/builtin-demo-list.png");
   a.findViewById(R.id.configureFeeds).performClick();android.app.AlertDialog d=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
