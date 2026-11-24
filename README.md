@@ -22,7 +22,7 @@ A home-screen widget and companion app that shows my Instinct reminders and todo
 Active test builds, published on this repository's Releases page. Per-version changes are in [CHANGELOG.md](CHANGELOG.md).
 
 - **tindak for Android**: signed **v0.5.20** uses `com.vanipy.tindak`, a separate install from previous `com.vanipy.intodo`. See Releases for the actual APK and checksum. Public builds are unconfigured; generate a new on-device pairing key before requesting a feed switch.
-- **tindak for DeltaChat**: historical release **v0.4.7** (current Tindak0.4.10 package built and tested locally, not yet distributed) (`.xdc` attachment for DeltaChat).
+- **tindak for DeltaChat**: historical release **v0.4.7** (current Tindak 0.4.10 package built and tested locally, not yet distributed) (`.xdc` attachment for DeltaChat).
 - **tindak for web**: review canvas published through GitHub Pages Actions.
 - Branch `unfinished/log-access-v3` holds a partial, unfinished step in the wider log-access work: selectable bot-log text, nested scrolling that preserves vertical drags, and opening at the newest lines. It has been compiled but not run on a device, and is not part of any release - see `UNFINISHED-log-access-v3.md` on that branch.
 
@@ -120,7 +120,7 @@ Current identity across Android, webxdc and web is **tindak**. Android uses `com
 
 ## Historical Android 0.5.16 rename update (superseded)
 
-The0.5.16 historical release was a naming-only update that kept the previous package and paired data. That plan was superseded by the0.5.20 identity reset below. Old tagged releases retain their original package and bytes. See `docs/releases/0.5.16.md` for the historical scope.
+The 0.5.16 historical release was a naming-only update that kept the previous package and paired data. That plan was superseded by the 0.5.20 identity reset below. Old tagged releases retain their original package and bytes. See `docs/releases/0.5.16.md` for the historical scope.
 
 
 ## Tindak identity reset, 20 November 2026
@@ -130,7 +130,7 @@ widget actions and browser/miniapp local storage now use tindak. The actual task
 is served at `/tindak/`, not a redirect. The review prototype and code canvas remain
 separate under `/tindak/review/` and `/tindak/code-review/`.
 
-Android0.5.20 is a separate install from previous `com.vanipy.intodo` APKs. Existing
+Android 0.5.20 is a separate install from previous `com.vanipy.intodo` APKs. Existing
 configuration and browser state are not migrated. Tagged historical releases remain
 available unchanged. The new install needs its own on-device pairing key and feed
 setup before it can decrypt reminders. This change does not re-pair the phone, alter
