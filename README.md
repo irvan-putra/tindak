@@ -138,3 +138,7 @@ an existing bot account or publish/send a miniapp into a real chat. Reminder con
 and the existing encrypted feed are not deleted or reset. Do not uninstall the old
 app until you have finished any setup you still need. Browser tasks remain local,
 without Android task sync or timed alerts.
+
+---
+
+Built with AI assistance (Instinct and others). Not everything has been reviewed by Irvan.
